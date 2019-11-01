@@ -1,6 +1,32 @@
 import React, { Component } from 'react'
 
 export class orders extends Component {
+
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      names:[],
+      isLoaded:false
+    }
+  }
+
+  componentDidMount()
+  {
+    fetch('https://www.getpostman.com/collections/8cd41b2c738ac158c06f')
+    .then(results=>{
+      return results.json();
+    })
+    .then(data=>{
+      let name = data.results.map((nm) =>{
+        return (
+          <div key={nm.results}>
+            <p>nm.name</p>
+          </div>
+        );
+      })
+    })
+  }
     render() {
         return (
             <div className="container-fluid">
