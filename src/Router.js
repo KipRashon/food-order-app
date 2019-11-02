@@ -9,17 +9,22 @@ import Login from './components/admin/Login';
 
 export class UserForm extends Component
 {
-    state = {
-        admin:false,
-        step:1,
-        name: '',
-        location: '',
-        phoneNumber: '',
-        email: '',
-        idNumber: '',
+    
 
+        state = {
+            admin:false,
+            step:1,
+            name: '',
+            location: '',
+            phoneNumber: '',
+            email: '',
+            idNumber: '',
+            
+        }
+       
+    
 
-    }
+  
 
     // proceed to next step 
     nextStep = () =>{
