@@ -11,23 +11,42 @@ export class orders extends Component {
     }
   }
 
-  componentDidMount()
-  {
-    fetch('https://www.getpostman.com/collections/8cd41b2c738ac158c06f')
-    .then(results=>{
-      return results.json();
+  componentDidMount(){
+    fetch("https://cors-anywhere.herokuapp.com/https://demo.kilimanjarofood.co.ke/api/v1/dispatch/orders",
+    {
+      headers: {
+       
+          "origin": "*",
+          "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+          "preflightContinue": false,
+          "optionsSuccessStatus": 204
+      
+      }
+    }
+    )
+    .then(data =>{
+        return data.json();
     })
-    .then(data=>{
-      let name = data.results.map((nm) =>{
-        return (
-          <div key={nm.results}>
-            <p>nm.name</p>
-          </div>
-        );
-      })
+    .then(res =>{
+        let names = res.data.orders.map((item)=>{
+            return(
+            <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.mobile}</td>
+                <td>{item.delivery_address}</td>
+                <td>{item.cart[0].product_name}</td>
+                <td>{item.cart[0].description}</td>
+                <td>{item.cart[0].quantity}</td>
+            </tr>
+            )
+        })
+        this.setState({names:names});
+        
     })
-  }
+} 
     render() {
+      const {names }= this.state;
         return (
             <div className="container-fluid">
                  <div class="justify-col-md-4 float-right">
@@ -39,26 +58,19 @@ export class orders extends Component {
                 <table className="table table-striped table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
-                      <th>Picture</th>
-                      <th>@</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Delivery Address</th>
+                      <th>Product Name</th>
+                      <th>Description</th>
                       <th>Quantity</th>
-                      <th>Cost</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
         
                   <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Food 1</td>
-                        <td><img src=""  alt="image here"/></td>
-                        <td>100</td>
-                        <td>3</td>
-                        <td>300</td>
-                        <td><button className="btn btn-info " onClick ={this.props.nextStep}>Dispatch Now</button></td>
-                    </tr>
+                   
+                    {names}
                   </tbody>
                 </table>
               </div>
